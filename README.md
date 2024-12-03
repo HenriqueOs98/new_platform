@@ -1,110 +1,137 @@
-# CodeCraft: Browser-based Coding Platform
+# Code Editor
 
-CodeCraft is a modern, interactive coding platform built with Next.js, designed to provide an engaging learning experience for developers of all skill levels.
+An interactive JavaScript learning platform with tutorial support.
 
-## Features
+## Project Architecture
 
-- **Interactive Code Editor**: Write and execute JavaScript code directly in your browser.
-- **Real-time Output**: See the results of your code execution instantly.
-- **Tutorial System**: Learn through structured, markdown-based tutorials with progress tracking.
-- **AI Chat Assistant**: Get help and answers to your coding questions (mock implementation).
-- **Dark/Light Mode**: Choose your preferred theme for comfortable coding.
-- **Responsive Design**: Enjoy a seamless experience on desktop and mobile devices.
-- **User Authentication**: Secure user accounts with preferences and social features (mock implementation).
+### Type Definitions
+typescript
+interface Tutorial {
+id: string;
+path: string;
+order: number;
+metadata?: {
+title: string;
+description: string;
+difficulty: "beginner" | "intermediate" | "advanced";
+initialCode: string;
+solution: string;
+}
+}
+interface EditorConfig {
+timeout_duration: number;
+max_output_lines: number;
+max_output_length: number;
+max_iterations: number;
+}
 
-## Tech Stack
+code_editor/
+├── public/
+│ └── tutorials/
+│ ├── index.json # Tutorial index
+│ └── 01_basics/ # Tutorial markdown files
+│ ├── 01_variables.md
+│ └── 02_functions.md
+├── src/
+│ ├── components/ # UI Components (snake_case)
+│ ├── config/
+│ │ ├── constants.js # Global constants and safety patterns
+│ │ ├── editor.js # CodeMirror setup (JavaScript-first)
+│ │ └── theme.js # Theme configuration
+│ ├── services/ # Core functionality
+│ └── utils/ # Helper functions
 
-- **Frontend Framework**: Next.js 13 with App Router
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui (required for all UI components)
-- **Code Editor**: Code Mirror (mocked in current implementation)
-- **State Management**: React Hooks
-- **Authentication**: Browser storage (prepared for Supabase integration)
-- **Content Management**: GitHub-based tutorial system
+## Core Features
 
-## Development Guidelines
+1. **Tutorial System**
+   - Supports multiple tutorial types (JavaScript, Web Development)
+   - Markdown-based tutorial content
+   - Difficulty levels and ordering
 
-### UI Components
-- All UI components must use shadcn/ui library components
-- Custom components should extend shadcn/ui base components
-- Maintain consistent styling using Tailwind CSS classes
+2. **Code Editor**
+   - Based on CodeMirror 6
+   - Supports JavaScript, HTML, and CSS
+   - Multiple editor views for web development
+   - Syntax highlighting
+   - Dark theme support
 
-### Component Structure
-- Use TypeScript for all components
-- Implement proper type definitions
-- Follow the established project structure
+3. **Execution Environment**
+   - JavaScript code execution
+   - Web preview for HTML/CSS/JS
+   - Console output
+   - Execution controls (run, stop, clear)
 
-### Layout Requirements
-- All panels must implement proper overflow handling
-- Navigation elements (navbar, bottom nav) must remain fixed
-- Use ResizablePanelGroup for adjustable layouts
-- Implement scrollable content areas within fixed containers
-- Code editor layout pattern:
-  - Use flex-col with h-full for container
-  - Header with flex-shrink-0 to prevent compression
-  - Content area with flex-1 and h-full
-  - Textarea with flex-1 and min-h-[400px]
-  - Button container with flex-shrink-0
+4. **Theme System**
+   - Dark/Light mode support
+   - Customizable UI elements
+   - Persistent theme preferences
 
-### Component Sizing Guidelines
-- Use flexible layouts with flex-1 for main content
-- Set minimum heights only where necessary (e.g., code editor min-h-[400px])
-- Avoid nested percentage heights
-- Use flex-shrink-0 for fixed-size elements
-- Maintain proper padding and spacing with p-4
+## Key Components
 
-## Project Structure
+### Services
 
-src/
-├── components/
-│ ├── ui/ # shadcn/ui components
-│ ├── layout/ # Layout components
-│ └── features/ # Feature-specific components
-├── services/ # API and external services
-├── types/ # TypeScript definitions
-├── lib/ # Utility functions
-└── styles/ # Global styles
+1. **EditorManager**
 
-## Component Guidelines
+javascript:src/services/EditorManager.js
+startLine: 4
+endLine: 93
+Manages editor instances and handles switching between JavaScript-only and web development modes.
 
-### Required Props
-- All components should accept `className` prop for style overrides
-- Use proper TypeScript interfaces for props
-- Document required and optional props
+2. **TutorialManager**
 
-### Styling
-- Use Tailwind CSS classes
-- Follow shadcn/ui theming system
-- Implement responsive design patterns
+javascript:src/services/TutorialManager.js
+startLine: 4
+endLine: 94
+
+Handles tutorial loading, rendering, and navigation.
+
+### Main Application
+
+javascript:src/main.js
+startLine: 9
+endLine: 29
+
+
+Initializes and coordinates all services and components.
+
+## Dependencies
+
+- CodeMirror 6 (Editor)
+- Marked (Markdown parsing)
+- DOMPurify (Content sanitization)
+- Auth0 (Authentication)
+- Vite (Build tool)
 
 ## Getting Started
 
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Run development server: `npm run dev`
-4. Access at http://localhost:3000
+1. Install dependencies:
+bash
+npm install
 
-## Contributing
+2. Run development server:
 
-1. Follow the established component guidelines
-2. Use shadcn/ui components for UI elements
-3. Maintain TypeScript types
-4. Test responsive layouts
-5. Document component usage
+npm run dev
 
-## Future Enhancements
 
-- Supabase integration
-- Real Code Mirror implementation
-- AI service integration
-- Extended tutorial system
-- Real-time collaboration
-- Advanced code execution environment
+3. Build for production:
 
-## Important Notes
+npm run build
 
-- Always use shadcn/ui components for consistency
-- Implement proper scroll handling in panels
-- Maintain fixed navigation elements
-- Follow TypeScript best practices
-- Document component changes# new_platform
+
+## Tutorial Structure
+
+Tutorials are stored in Markdown format with metadata in `index.json`. Two types of tutorials are supported:
+
+1. JavaScript-only tutorials
+2. Web Development tutorials (HTML, CSS, JavaScript)
+
+Each tutorial includes:
+- Title
+- Difficulty level
+- Order
+- Type
+- Content in Markdown format
+
+## Theme Configuration
+
+The application supports both light and dark themes, managed by the ThemeManager service. Theme preferences are persisted in localStorage.

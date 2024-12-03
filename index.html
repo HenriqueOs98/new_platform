@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Editor</title>
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="top-nav">
+        <div class="logo">CodeEditor</div>
+        <div class="nav-controls"></div>
+      </header>
+
+      <main class="main-content">
+        <div class="tutorial-panel">
+          <div class="tutorial-header">
+            <select id="tutorial-select">
+              <option value="">Select Tutorial...</option>
+            </select>
+          </div>
+          <div class="tutorial-content"></div>
+        </div>
+
+        <div class="editor-workspace">
+          <div class="toolbar">
+            <select id="language-select">
+              <option value="javascript">JavaScript</option>
+              <option value="html">HTML</option>
+              <option value="css">CSS</option>
+            </select>
+            <button id="run-btn">Run</button>
+            <button id="save-btn">Save</button>
+            <button id="reset-btn">Reset</button>
+            <button id="clear-console">Clear Console</button>
+          </div>
+          
+          <div class="editor-container">
+            <div id="editor"></div>
+            <div class="loading-overlay">
+              <div class="spinner"></div>
+              <div class="loading-text">Running...</div>
+              <button id="stop-btn">Stop Execution</button>
+            </div>
+          </div>
+          
+          <div class="output-container">
+            <div id="output-content"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "tutorials": [
+    {
+      "id": "js-basics",
+      "title": "JavaScript Basics",
+      "difficulty": "beginner",
+      "order": 1,
+      "type": "javascript"
+    },
+    {
+      "id": "web-basics",
+      "title": "Web Development Basics",
+      "difficulty": "beginner",
+      "order": 2,
+      "type": "web"
+    }
+  ]
+}
